@@ -1,3 +1,6 @@
+#ifndef BACKGROUND_H
+#define BACKGROUND_H
+
 /* Background Image Data */
 
 const unsigned short image[38400] = {
@@ -2603,3 +2606,5 @@ const unsigned short image[38400] = {
     28572, 28539, 28572, 29596, 28572, 30653, 27515, 28572, 27515, 29596, 29596, 29596, 28539, 
     28539, 27482, 29629, 27482, 29596, 30653, 
 };
+
+#endif
