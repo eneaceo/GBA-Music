@@ -1,10 +1,21 @@
 #ifndef ALBUM_H
 #define ALBUM_H
 
+/* Script generated */
+/* Album Data */
+
 #include "../AAS_Data.h"
 
-const AAS_s8* SongStart[6];
-const AAS_s8* SongEnd[6];
+#define SONGNUMBER 6
+#define TITLEMAXSIZE 30
+
+const AAS_s8* SongStart[SONGNUMBER];
+const AAS_s8* SongEnd[SONGNUMBER];
+
+const unsigned char PositionXTitleStart = 60;
+const unsigned char PositionYTitleStart = 5;
+const unsigned char SongTitleSeparation = 10;
+const char SongTitle[SONGNUMBER][TITLEMAXSIZE] = {"DISFORIA*", "FOTO DE UN CABALLO*", "DE INTERNET SE SALE*", "CAPTCHA*", "PARKING TANATORIO*", "POSTURA*"};
 
 void InitAlbum()
 {

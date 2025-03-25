@@ -24,7 +24,15 @@ void InitSystem()
     irq_add(II_VBLANK, AAS_DoWork);
 }
 
-void ProcessInput(char *aSongIndex, char *aSongPlayed)
+void PlaySong(char *aSongIndex, char *aSongPlaying, bool *aPlaying)
+{
+    AAS_SFX_Play(0, 64, 8000, SongStart[(unsigned char) *aSongIndex], SongEnd[(unsigned char) *aSongIndex], AAS_NULL);
+    AAS_SFX_Play(1, 64, 8000, SongStart[(unsigned char) *aSongIndex], SongEnd[(unsigned char) *aSongIndex], AAS_NULL);
+    *aSongPlaying = *aSongIndex;
+    *aPlaying = true;
+}
+
+void ProcessInput(char *aSongIndex, char *aSongPlaying, bool *aPlaying)
 {
     key_poll();
 
@@ -32,17 +40,21 @@ void ProcessInput(char *aSongIndex, char *aSongPlayed)
     {
         if (key_hit(KEY_A))
         {
-            AAS_SFX_Play(0, 64, 8000, SongStart[(unsigned char) *aSongIndex], SongEnd[(unsigned char) *aSongIndex], AAS_NULL);
-            AAS_SFX_Play(1, 64, 8000, SongStart[(unsigned char) *aSongIndex], SongEnd[(unsigned char) *aSongIndex], AAS_NULL);
-            *aSongPlayed = *aSongIndex;
+            PlaySong(aSongIndex, aSongPlaying, aPlaying);
+        }
+        else if (key_hit(KEY_B))
+        {
+            AAS_SFX_Stop(0);
+            AAS_SFX_Stop(1);
+            *aPlaying = false;
         }
         else if (key_hit(KEY_DOWN))
         {
-            *aSongIndex = (*aSongIndex + 1) % 6;
+            *aSongIndex = (*aSongIndex + 1) % SONGNUMBER;
         }
         else if (key_hit(KEY_UP))
         {
-            *aSongIndex = (*aSongIndex - 1 + 6) % 6;
+            *aSongIndex = (*aSongIndex - 1 + SONGNUMBER) % SONGNUMBER;
         }
     }
 }
@@ -71,18 +83,33 @@ int main()
 
     char SongIndex = 0;
     char SongPlaying = -1;
+    bool Playing = false;
 
     while (1)
     {
-        ProcessInput(&SongIndex, &SongPlaying);
-        
-        int text_size = 30;
-        PlotString("DISFORIA*", text_size, 60, 5, GetTitleColor(SongIndex, SongPlaying, 0));
-        PlotString("FOTO DE UN CABALLO*", text_size, 60, 15, GetTitleColor(SongIndex, SongPlaying, 1));
-        PlotString("DE INTERNET SE SALE*", text_size, 60, 25, GetTitleColor(SongIndex, SongPlaying, 2));
-        PlotString("CAPTCHA*", text_size, 60, 35, GetTitleColor(SongIndex, SongPlaying, 3));
-        PlotString("PARKING TANATORIO*", text_size, 60, 45, GetTitleColor(SongIndex, SongPlaying, 4));
-        PlotString("POSTURA*", text_size, 60, 55, GetTitleColor(SongIndex, SongPlaying, 5));
+        ProcessInput(&SongIndex, &SongPlaying, &Playing);
+        if (!Playing)
+        {
+            SongPlaying = -1;
+        }
+        else if (!AAS_SFX_IsActive(0))
+        {
+            SongPlaying++;
+            if (SongPlaying < SONGNUMBER)
+            {
+                PlaySong(&SongPlaying, &SongPlaying, &Playing);
+            }
+            else 
+            {
+                SongIndex = 0;
+                Playing = false;
+            }
+        }
+
+        for (unsigned char Index = 0; Index < SONGNUMBER; Index++)
+        {
+            PlotString(SongTitle[Index], TITLEMAXSIZE, PositionXTitleStart, PositionYTitleStart + Index * SongTitleSeparation, GetTitleColor(SongIndex, SongPlaying, Index));
+        }
 
         VBlankIntrWait();
     }

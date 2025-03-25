@@ -14,7 +14,7 @@ unsigned short SetColor(unsigned char aR, unsigned char aG, unsigned char aB)
     return (aR & 0x1F) | (aG & 0x1F) << 5 | (aB & 0x1F) << 10;
 }
 
-void PlotString(char aString[], unsigned char aSize, unsigned char aX, unsigned char aY, unsigned short aColor)
+void PlotString(const char aString[], unsigned char aSize, unsigned char aX, unsigned char aY, unsigned short aColor)
 {
     for (unsigned char C = 0; C < aSize; C++)
     {

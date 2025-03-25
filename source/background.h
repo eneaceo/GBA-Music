@@ -1,6 +1,7 @@
 #ifndef BACKGROUND_H
 #define BACKGROUND_H
 
+/* Script Generated Header*/
 /* Background Image Data */
 
 const unsigned short Background[38400] = {

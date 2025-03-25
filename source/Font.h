@@ -1,6 +1,8 @@
 #ifndef FONT_H
 #define FONT_H
 
+/* TODO -> Better Font, more neutral, GBA feel like maybe, but also should be legible and try to be small so long song titles could enter */
+
 const unsigned short Letter_A[8] = {0b11111110, 0b11000110, 0b10111010, 0b10000010, 0b10111010, 0b10111010, 0b11111110, 0b00000000};
 const unsigned short Letter_B[8] = {0b11111110, 0b10000110, 0b10111010, 0b10000110, 0b10111010, 0b10000110, 0b11111110, 0b00000000};
 const unsigned short Letter_C[8] = {0b11111110, 0b11000010, 0b10111110, 0b10111110, 0b10111110, 0b11000010, 0b11111110, 0b00000000};
