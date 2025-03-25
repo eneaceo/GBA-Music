@@ -2,14 +2,7 @@
 #include "AAS.h"
 
 #include "Render.h"
-// Script generated includes.
-#include "Background.h"
 #include "Album.h"
-
-
-#define REG_KEY (*(volatile AAS_u16 *)0x04000130)
-#define REG_KEY_A 0x0001
-#define REG_KEY_B 0x0002
 
 
 void InitSystem()
@@ -31,65 +24,66 @@ void InitSystem()
     irq_add(II_VBLANK, AAS_DoWork);
 }
 
+void ProcessInput(char *aSongIndex, char *aSongPlayed)
+{
+    key_poll();
+
+    if (key_hit(KEY_ANY))
+    {
+        if (key_hit(KEY_A))
+        {
+            AAS_SFX_Play(0, 64, 8000, SongStart[(unsigned char) *aSongIndex], SongEnd[(unsigned char) *aSongIndex], AAS_NULL);
+            AAS_SFX_Play(1, 64, 8000, SongStart[(unsigned char) *aSongIndex], SongEnd[(unsigned char) *aSongIndex], AAS_NULL);
+            *aSongPlayed = *aSongIndex;
+        }
+        else if (key_hit(KEY_DOWN))
+        {
+            *aSongIndex = (*aSongIndex + 1) % 6;
+        }
+        else if (key_hit(KEY_UP))
+        {
+            *aSongIndex = (*aSongIndex - 1 + 6) % 6;
+        }
+    }
+}
+
+unsigned short GetTitleColor(const char aSongIndex, const char aSongPlaying, const char aIndex)
+{
+    unsigned short Color = CLR_WHITE;
+
+    if (aIndex == aSongPlaying)
+    {
+        Color = CLR_ORANGE;
+    } 
+    else if (aIndex == aSongIndex)
+    {
+        Color = CLR_YELLOW;
+    }
+
+    return Color;
+}
+
 int main()
 {
     InitSystem();
     InitAlbum();
+    PlotBackground();
 
-    int SongIndex = 0;
-
-    int keys, keys_changed;
-    int prev_keys = 0;
-
-    for (int i = 0; i < 160; i++)
-    {
-        for (int j = 0; j < 240; j++)
-        {
-            PlotPixel(j, i, image[i * 240 + j]);
-        }
-    }
-
-    for (int i = 0; i < 80; i++)
-    {
-        for (int j = 0; j < 80; j++)
-        {
-            PlotPixel(j, i, CLR_BLACK);
-        }
-    }
-
-    const u8 letter_A[8] = {0, 24, 36, 36, 60, 36, 36, 0};
-    u8 size = 8;
-    int x = 40;
-    int y = 40;
-    for (int i = 0; i < size; i++)
-    {
-        int num = letter_A[i];
-        for (int bit = 7; bit >= 0; bit--)
-        {
-            if ((num >> bit) & 1)
-            {
-                PlotPixel(x + bit, y + i, CLR_WHITE);
-            }
-        }
-    }
+    char SongIndex = 0;
+    char SongPlaying = -1;
 
     while (1)
     {
-        keys = ~REG_KEY;
-        keys_changed = keys ^ prev_keys;
-        prev_keys = keys;
-
-        if ((keys_changed & REG_KEY_A) && (keys & REG_KEY_A))
-        {
-            AAS_SFX_Play(0, 64, 8000, SongStart[SongIndex], SongEnd[SongIndex], AAS_NULL);
-            AAS_SFX_Play(1, 64, 8000, SongStart[SongIndex], SongEnd[SongIndex], AAS_NULL);
-        }
-
-        if ((keys_changed & REG_KEY_B) && (keys & REG_KEY_B))
-        {
-            SongIndex = (SongIndex + 1) % 6;
-        }
+        ProcessInput(&SongIndex, &SongPlaying);
         
+        int text_size = 30;
+        PlotString("DISFORIA*", text_size, 60, 5, GetTitleColor(SongIndex, SongPlaying, 0));
+        PlotString("FOTO DE UN CABALLO*", text_size, 60, 15, GetTitleColor(SongIndex, SongPlaying, 1));
+        PlotString("DE INTERNET SE SALE*", text_size, 60, 25, GetTitleColor(SongIndex, SongPlaying, 2));
+        PlotString("CAPTCHA*", text_size, 60, 35, GetTitleColor(SongIndex, SongPlaying, 3));
+        PlotString("PARKING TANATORIO*", text_size, 60, 45, GetTitleColor(SongIndex, SongPlaying, 4));
+        PlotString("POSTURA*", text_size, 60, 55, GetTitleColor(SongIndex, SongPlaying, 5));
+
         VBlankIntrWait();
     }
 
