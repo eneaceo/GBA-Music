@@ -16,9 +16,9 @@ unsigned short SetColor(unsigned char aR, unsigned char aG, unsigned char aB)
 
 void PlotString(char aString[], unsigned char aSize, unsigned char aX, unsigned char aY, unsigned short aColor)
 {
-    for (unsigned char c = 0; c < aSize; c++)
+    for (unsigned char C = 0; C < aSize; C++)
     {
-        char Letter = aString[c];
+        char Letter = aString[C];
             switch (Letter) {
                 case 'A': PlotLetter(0, aX, aY, aColor); break;
                 case 'B': PlotLetter(1, aX, aY, aColor); break;
@@ -56,27 +56,27 @@ void PlotString(char aString[], unsigned char aSize, unsigned char aX, unsigned 
 
 void PlotLetter(unsigned char aIndex, unsigned char aX, unsigned char aY, unsigned short aColor)
 {
-    const unsigned short* letter = letters[aIndex];
-    for (int i = 0; i < 8; i++)
+    const unsigned short* Letter = Letters[aIndex];
+    for (unsigned char I = 0; I < 8; I++)
     {
-        int num = letter[i];
-        for (int bit = 0; bit < 8; bit++)
+        unsigned char Num = Letter[I];
+        for (unsigned char Bit = 0; Bit < 8; Bit++)
         {
-            if ((i == 0 && bit == 0) || (i == 7 && bit == 7))
+            if ((I == 0 && Bit == 0) || (I == 7 && Bit == 7))
                 continue;
 
-            PlotPixel(aX + (7 - bit), aY + i, ((num >> bit) & 1 ? CLR_BLACK : aColor));
+            PlotPixel(aX + (7 - Bit), aY + I, ((Num >> Bit) & 1 ? CLR_BLACK : aColor));
         }
     }
 }
 
 void PlotBackground()
 {
-    for (int i = 0; i < 160; i++)
+    for (unsigned char I = 0; I < 160; I++)
     {
-        for (int j = 0; j < 240; j++)
+        for (unsigned char J = 0; J < 240; J++)
         {
-            PlotPixel(j, i, Background[i * 240 + j]);
+            PlotPixel(J, I, Background[I * 240 + J]);
         }
     }
 }
