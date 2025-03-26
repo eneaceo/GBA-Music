@@ -1,6 +1,9 @@
 #ifndef BACKGROUND_H
 #define BACKGROUND_H
 
+/* This file is an example of how Background.h should look like */
+/* Running the python script Image2GBA.py will generate it */
+
 /* Script Generated Header*/
 /* Background Image Data */
 

@@ -9,29 +9,29 @@
 
 AAS_BEGIN_DECLS
 
-extern const AAS_s8* const AAS_DATA_SFX_START_fotocopia_001;
+extern const AAS_s8* const AAS_DATA_SFX_START_fotocopia_01_Disforia;
 
-extern const AAS_s8* const AAS_DATA_SFX_END_fotocopia_001;
+extern const AAS_s8* const AAS_DATA_SFX_END_fotocopia_01_Disforia;
 
-extern const AAS_s8* const AAS_DATA_SFX_START_fotocopia_002;
+extern const AAS_s8* const AAS_DATA_SFX_START_fotocopia_02_Foto_de_un_caballo;
 
-extern const AAS_s8* const AAS_DATA_SFX_END_fotocopia_002;
+extern const AAS_s8* const AAS_DATA_SFX_END_fotocopia_02_Foto_de_un_caballo;
 
-extern const AAS_s8* const AAS_DATA_SFX_START_fotocopia_003;
+extern const AAS_s8* const AAS_DATA_SFX_START_fotocopia_03_De_Internet_se_sale;
 
-extern const AAS_s8* const AAS_DATA_SFX_END_fotocopia_003;
+extern const AAS_s8* const AAS_DATA_SFX_END_fotocopia_03_De_Internet_se_sale;
 
-extern const AAS_s8* const AAS_DATA_SFX_START_fotocopia_004;
+extern const AAS_s8* const AAS_DATA_SFX_START_fotocopia_04_Captcha;
 
-extern const AAS_s8* const AAS_DATA_SFX_END_fotocopia_004;
+extern const AAS_s8* const AAS_DATA_SFX_END_fotocopia_04_Captcha;
 
-extern const AAS_s8* const AAS_DATA_SFX_START_fotocopia_005;
+extern const AAS_s8* const AAS_DATA_SFX_START_fotocopia_05_Parking_Tanatorio;
 
-extern const AAS_s8* const AAS_DATA_SFX_END_fotocopia_005;
+extern const AAS_s8* const AAS_DATA_SFX_END_fotocopia_05_Parking_Tanatorio;
 
-extern const AAS_s8* const AAS_DATA_SFX_START_fotocopia_006;
+extern const AAS_s8* const AAS_DATA_SFX_START_fotocopia_06_Postura;
 
-extern const AAS_s8* const AAS_DATA_SFX_END_fotocopia_006;
+extern const AAS_s8* const AAS_DATA_SFX_END_fotocopia_06_Postura;
 
 AAS_END_DECLS
 
