@@ -61,15 +61,15 @@ void ProcessInput(char *aSongIndex, char *aSongPlaying, bool *aPlaying)
 
 unsigned short GetTitleColor(const char aSongIndex, const char aSongPlaying, const char aIndex)
 {
-    unsigned short Color = CLR_WHITE;
+    unsigned short Color = 0xF300;
 
     if (aIndex == aSongPlaying)
     {
-        Color = CLR_ORANGE;
+        Color = 0xF7C0;
     } 
     else if (aIndex == aSongIndex)
     {
-        Color = CLR_YELLOW;
+        Color = 0xEB00;
     }
 
     return Color;
