@@ -28,6 +28,8 @@ Now compile it with the command make and you should have a .gba file with your m
 
 _I will update too a way of changing the colors of the letters with a script, for now if you want to change it in main.c you can change the values of the GetTitleColor function._
 
+### Thanks to
+
 Made with Tonc originally by Jasper “cearn” Vijn maintaned by gbadev-org.
 
 Made with Advance Audio System by Ties Stuij.
