@@ -2,6 +2,11 @@ import glob
 import os
 import argparse
 import sys
+import unicodedata
+
+def strip_accents(text):
+    nfkd = unicodedata.normalize('NFKD', text)
+    return ''.join(c for c in nfkd if not unicodedata.combining(c))
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-x", type=int, help="Text start position in X", required = False, default = 5)
@@ -28,11 +33,16 @@ file_names = []
 song_names = []
 max_text_size = 0
 for file in files:
+    dir_path = os.path.dirname(file)
     file_name_ext = os.path.basename(file)
-    file_name = os.path.splitext(file_name_ext)[0]
+    file_name = strip_accents(os.path.splitext(file_name_ext)[0])
     song_name = file_name.split('_', 2)[-1]
-    song_name = song_name.replace('_', ' ').upper()
-    
+    song_name = strip_accents(song_name.replace('_', ' ').upper())
+
+    old_path = os.path.join(dir_path, file_name_ext)
+    new_path = os.path.join(dir_path, file_name + ".raw")
+    os.rename(old_path, new_path)
+
     text_size = len(song_name)
     if text_size > max_text_size:
         max_text_size = text_size
